@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String          @id @default(uuid())
+  name           String
+  age            Int
+  email          String          @unique
+  isAdmin        Boolean
+  role           Role            @default(BASIC)
+  preferences    Json
+  writtenPosts   Post[]          @relation("WrittenPosts")
+  favouritePosts Post[]          @relation("FavouritePosts")
+  userPreference UserPreference?
+
+  @@unique([name, age]) // no user with same name and age
+  @@index([email])
+}
+
+model UserPreference {
+  id           String  @id @default(uuid())
+  emailUpdates Boolean
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
+}
+
+model Post {
+  id             String     @id @default(uuid())
+  rating         Float
+  title          String
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  author         User       @relation("WrittenPosts", fields: [authorId], references: [id])
+  authorId       String
+  favouritedBy   User?      @relation("FavouritePosts", fields: [favouritedById], references: [id])
+  favouritedById String?
+  categories     Category[]
+
+  // @@id([title, authorId]) // alternative for id field, it created unique combination of title and authorid which works as id.
+}
+
+model Category {
+  id    String @id @default(uuid())
+  posts Post[]
+}
+
+enum Role {
+  BASIC
+  ADMIN
+}
