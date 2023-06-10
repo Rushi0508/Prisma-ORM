@@ -77,28 +77,44 @@ async function main() {
 
     /*********** Find Many  ********** */
 
-    const users = await prisma.user.findMany({
-        where: {
-            // userPreference: {
-            //     emailUpdates: true
-            // }
-            writtenPosts: {
-                // every: {
-                //     title: "HELLO"
-                // }
-                // none: {
-                //     title: "HELLO"
-                // }
-                some: {
-                    title: "HELLO"
+    // const users = await prisma.user.findMany({
+    //     where: {
+    //         // userPreference: {
+    //         //     emailUpdates: true
+    //         // }
+    //         writtenPosts: {
+    //             // every: {
+    //             //     title: "HELLO"
+    //             // }
+    //             // none: {
+    //             //     title: "HELLO"
+    //             // }
+    //             some: {
+    //                 title: "HELLO"
+    //             }
+    //         }
+    //     },
+    //     orderBy: {
+    //         age: "asc"
+    //     },
+    // })
+    // console.log(users);
+
+    /********* Update *********** */
+    const user = await prisma.user.update({
+        where:{
+            email: "rohit@gmail.com"
+        },
+        data: {
+            userPreference: {
+                connect: {
+                    id: "3185ec14-9af5-497f-b0a5-6398473c2327"
                 }
             }
-        },
-        orderBy: {
-            age: "asc"
-        },
+        }
     })
-    console.log(users);
+    console.log(user);
+    
 
     
 }
