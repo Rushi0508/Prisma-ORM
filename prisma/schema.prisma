@@ -11,16 +11,16 @@ datasource db {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  name           String
-  age            Int
-  email          String          @unique
-  isAdmin        Boolean
-  role           Role            @default(BASIC)
-  preferences    Json
-  writtenPosts   Post[]          @relation("WrittenPosts")
-  favouritePosts Post[]          @relation("FavouritePosts")
-  userPreference UserPreference?
+  id               String          @id @default(uuid())
+  name             String
+  age              Int
+  email            String          @unique
+  role             Role            @default(BASIC)
+  // preferences    Json
+  writtenPosts     Post[]          @relation("WrittenPosts")
+  favouritePosts   Post[]          @relation("FavouritePosts")
+  userPreference   UserPreference? @relation(fields: [userPreferenceId], references: [id])
+  userPreferenceId String?         @unique
 
   @@unique([name, age]) // no user with same name and age
   @@index([email])
@@ -29,8 +29,7 @@ model User {
 model UserPreference {
   id           String  @id @default(uuid())
   emailUpdates Boolean
-  user         User    @relation(fields: [userId], references: [id])
-  userId       String  @unique
+  user         User?
 }
 
 model Post {
