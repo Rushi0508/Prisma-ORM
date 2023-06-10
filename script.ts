@@ -79,25 +79,20 @@ async function main() {
 
     const users = await prisma.user.findMany({
         where: {
-            // name: {in: ["Virat", "Rushi"]}
-            // name: {notIn: ["Virat", "Rushi"]}
-            // age: {gt: 20}
-            // email: {
-            //     // contains: "@gmail.com"
-            //     // startsWith: "rushi"
-            //     endsWith: ".com"
-            // },
-            // AND: [
-            //     {email: {startsWith: "rushi"}},
-            //     {email: {endsWith: ".com"}}
-            // ]
-            // OR: [
-            //     {name: "Rushi"},
-            //     {age: {gt: 35}}
-            // ]
-            NOT: [
-                {email: {endsWith: ".com"}}
-            ]
+            // userPreference: {
+            //     emailUpdates: true
+            // }
+            writtenPosts: {
+                // every: {
+                //     title: "HELLO"
+                // }
+                // none: {
+                //     title: "HELLO"
+                // }
+                some: {
+                    title: "HELLO"
+                }
+            }
         },
         orderBy: {
             age: "asc"
