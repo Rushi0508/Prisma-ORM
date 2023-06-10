@@ -101,19 +101,30 @@ async function main() {
     // console.log(users);
 
     /********* Update *********** */
-    const user = await prisma.user.update({
-        where:{
-            email: "rohit@gmail.com"
-        },
-        data: {
-            userPreference: {
-                connect: {
-                    id: "3185ec14-9af5-497f-b0a5-6398473c2327"
-                }
-            }
+
+    // const user = await prisma.user.update({
+    //     where:{
+    //         email: "rohit@gmail.com"
+    //     },
+    //     data: {
+    //         userPreference: {
+    //             connect: {
+    //                 id: "3185ec14-9af5-497f-b0a5-6398473c2327"
+    //             }
+    //         }
+    //     }
+    // })
+    // console.log(user);
+
+    /********* Delete ********* */
+
+    const user = await prisma.user.delete({
+        where: {
+            email: "virat@gmail.in"
         }
     })
     console.log(user);
+    
     
 
     
