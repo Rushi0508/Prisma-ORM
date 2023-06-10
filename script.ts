@@ -79,13 +79,29 @@ async function main() {
 
     const users = await prisma.user.findMany({
         where: {
-            role: "BASIC"
+            // name: {in: ["Virat", "Rushi"]}
+            // name: {notIn: ["Virat", "Rushi"]}
+            // age: {gt: 20}
+            // email: {
+            //     // contains: "@gmail.com"
+            //     // startsWith: "rushi"
+            //     endsWith: ".com"
+            // },
+            // AND: [
+            //     {email: {startsWith: "rushi"}},
+            //     {email: {endsWith: ".com"}}
+            // ]
+            // OR: [
+            //     {name: "Rushi"},
+            //     {age: {gt: 35}}
+            // ]
+            NOT: [
+                {email: {endsWith: ".com"}}
+            ]
         },
         orderBy: {
             age: "asc"
         },
-        take: 3,
-        skip: 1
     })
     console.log(users);
 
